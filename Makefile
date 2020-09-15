@@ -7,7 +7,7 @@ status:
 
 .PHONY: commit
 commit:
-	@git commit -m "modifications" .; :
+	@git commit -m "modifications" .
 
 .PHONY: push
 push:
