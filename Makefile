@@ -15,7 +15,7 @@ add:
 
 .PHONY: commit
 commit:
-	@git commit --message "modifications" .
+	@git commit --message "modifications" .; :
 
 .PHONY: push
 push:
