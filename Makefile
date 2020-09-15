@@ -3,15 +3,23 @@ all:
 
 .PHONY: status
 status:
-	@git status
+	@git status .
+
+.PHONY: diff
+diff:
+	@git diff .
+
+.PHONY: add
+add:
+	@git add --verbose .
 
 .PHONY: commit
 commit:
-	@git commit -m "modifications" .
+	@git commit --message "modifications" .
 
 .PHONY: push
 push:
-	@hg push; :
+	@git push
 
 .PHONY: git
 git:
@@ -19,17 +27,9 @@ git:
 	@ echo '#########################################'
 	@(make -s commit && make push)
 
-.PHONY: cmp
-cmp:
-	@hg diff --stat
-
-.PHONY: diff
-diff:
-	@hg diff
-
 .PHONY: pull
 pull:
-	@hg pull --update
+	@git pull
 
 .PHONY: install
 install: jsmin local/install.cf
