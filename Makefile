@@ -3,11 +3,11 @@ all:
 
 .PHONY: status
 status:
-	@hg status
+	@git status
 
 .PHONY: commit
 commit:
-	@hg commit --addremove --message "modifications"; :
+	@git commit -m "modifications" .; :
 
 .PHONY: push
 push:
