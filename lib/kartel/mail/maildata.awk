@@ -24,8 +24,10 @@ parse_data(data) {
 }
 
 {
+	if (mail_mailbook(data))
+	next
+
 	mail_ipalilos(data)
-	mail_mailbook(data)
 }
 
 # Πρέπει να υπάρχουν τα εξής πεδία:
@@ -103,17 +105,17 @@ function mail_ipalilos(data,		ipalilos, query, row, i, email) {
 	ipalilos = get_ipalilos(data)
 
 	if (!ipalilos)
-	return 1
+	return 0
 
 	query = "SELECT `ipemail`, `premail` " \
 		"FROM `" erpotadb "`.`ipalilos` " \
 		"WHERE `kodikos` = " ipalilos
 
 	if (!spawk_submit(query))
-	return 1
+	return 0
 
 	if (!spawk_fetchone(row))
-	return 1
+	return 0
 
 	get_prosvasi(ipalilos, data)
 
@@ -128,10 +130,10 @@ function mail_ipalilos(data,		ipalilos, query, row, i, email) {
 	email = row[2]
 
 	if (!email)
-	return 1
+	return 0
 
 	send_mail(email, data)
-	return 0
+	return 1
 }
 
 function get_ipalilos(data,		query, row) {
@@ -192,16 +194,16 @@ function mail_mailbook(data,		query, row) {
 		"WHERE `karta` = " data["card"]
 
 	if (!spawk_submit(query))
-	return 1
+	return 0
 
 	if (!spawk_fetchone(row))
-	return 1
+	return 0
 
 	if (!row[1])
-	return 1
+	return 0
 
 	send_mail(row[1], data)
-	return 0
+	return 1
 }
 
 function send_mail(email, data) {
