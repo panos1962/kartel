@@ -1,0 +1,15 @@
+USUAL:
+	status
+	commit
+	push
+	diff
+	pull
+	www
+	jsmin
+	cleanup
+
+RISKY:
+	test
+	install
+	database
+	unistall

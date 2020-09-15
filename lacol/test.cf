@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+unset install_opts
+install_opts="${install_opts} --install"
+install_opts="${install_opts} --winpak"
+install_opts="${install_opts} --karteldb --dbadmin"
+install_opts="${install_opts} --mail"
+install_opts="${install_opts} --erpotadb"
+install_opts="${install_opts} --test"
+
+unset kartel_test
+unset kartel_opts
+
+kartel_opts="${kartel_opts} --rows=0"
+#kartel_opts="${kartel_opts} --card=50924"
+#kartel_opts="${kartel_opts} --card=61397"
+kartel_opts="${kartel_opts} --database=LOAD"
+#kartel_opts="${kartel_opts} --database=INSERT"
+#kartel_opts="${kartel_opts} --mail"
+kartel_opts="${kartel_opts} --verbose"
+#kartel_opts="${kartel_opts} -DQ"
+
+unset karteld_test
+unset karteld_opts
+
+karteld_opts="${karteld_opts} start"
+karteld_opts="${karteld_opts} --delay=5"
+
+unset misc_test
+unset misc_opts
+
+#misc_opts="${misc_opts} --lines=100"
+misc_opts="${misc_opts} --test"
+misc_opts="${misc_opts} --ipalilos"
+misc_opts="${misc_opts} --metavoli"
+misc_opts="${misc_opts} --adia"
+misc_opts="${misc_opts} --katastasi=1"
+misc_opts="${misc_opts} --nullwarn=FALSE"
+misc_opts="${misc_opts} --dbload"
+misc_opts="${misc_opts} --verbose"
+
+#kartel_test="kartel${kartel_opts}"
+#karteld_test="karteld${karteld_opts}"
+misc_test="erpota${misc_opts}"

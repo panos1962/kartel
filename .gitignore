@@ -1,0 +1,5 @@
+panos*
+*.swp
+*.min.js
+local/*
+!local/README.txt

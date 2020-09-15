@@ -1,0 +1,43 @@
+input,
+select {
+	vertical-align: middle;
+	padding-left: 4px;
+	text-shadow: 1px 0px 0px #1a1d4c;
+	text-overflow: ellipsis;
+	margin-left: 2px;
+	margin-right: 2px;
+	background-color: #FFFFFF;
+}
+
+label {
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+input:disabled,
+select:disabled {
+	color: midnightblue;
+	background-color: rgba(255, 255, 0, 0.1);
+}
+
+#ofelimo {
+	overflow-y: scroll;
+}
+
+/******************************************************************************/
+
+.filtroLabel {
+	font-style: italic;
+	text-align: right;
+}
+
+.filtraTabOff {
+	color: #cc0000;
+}
+
+/*
+td {
+	border-style: solid;
+	border-color: red;
+}
+*/

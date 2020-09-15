@@ -1,0 +1,433 @@
+/******************************************************************************/
+
+html {
+	height: 100%;
+}
+
+body {
+	opacity: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #16130E;
+	font-size: 16px;
+}
+
+form p {
+	padding: 0;
+	margin: 8px 0;
+}
+
+form {
+	display: inline-block;
+	margin-top: 8px;
+	padding: 8px 16px;
+
+	background-color: rgba(255, 251, 62, 0.1);
+
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	border-radius: 4px;
+	box-shadow: 2px 2px 8px #d8d8d8;
+}
+
+label {
+	font-style: italic;
+}
+
+input[type="submit"]:hover,
+input[type="radio"]:hover,
+input[type="button"]:hover {
+	text-shadow: 0.2px 0 0 currentcolor;
+	cursor: pointer;
+}
+
+.ui-dialog {
+	box-shadow: 4px 4px 8px #bdbdbd;
+	font-size: 0.95em;
+}
+
+.ui-dialog .ui-dialog-title {
+	float:none !important;
+	display: block;
+	font-size: 110%;
+}
+
+.kimeno {
+	width: 100%;
+	max-width: 800px;
+	text-align: justify;
+}
+
+.titlos {
+	display: inline-block;
+	font-size: 150%;
+	border-style: none none solid none;
+	border-width: 2px;
+	border-color: #000000;
+}
+
+/******************************************************************************/
+
+.formRight {
+	box-shadow: -2px 2px 8px #d8d8d8;
+}
+
+.hprompt {
+	display: inline-block;
+	text-align: right;
+	padding: 0 8px;
+	font-style: italic;
+	vertical-align: top;
+	white-space: normal;
+}
+
+.vprompt {
+	display: inline-block;
+	font-style: italic;
+}
+
+.formTitleArea {
+	text-align: center;
+}
+
+.formTitle {
+	display: inline-block;
+	margin: 4px 0 16px 0;
+	padding: 2px 12px;
+
+	background-color: rgba(245, 245, 219, 0.4);
+	color: rgba(33, 31, 78, 0.9);
+
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 120%;
+	font-weight: bold;
+
+	border-radius: 40px;
+	box-shadow: 1px 1px 1px rgba(197, 197, 197, 0.4);
+}
+
+.formPanel {
+	margin: 12px 0;
+	white-space: nowrap;
+}
+
+.formPanel input {
+	margin-left: 0;
+	margin-right: 8px;
+	cursor: pointer;
+}
+
+/******************************************************************************/
+
+#toolbar {
+	user-select: none;
+	height: 3.2ex;
+	border-style: none none solid none;
+	border-width: 2px;
+}
+
+#toolbar table {
+	width: 100%;
+	height: 100%;
+}
+
+#toolbarLeft {
+	width: 49%;
+	text-align: left;
+}
+
+#toolbarCenter {
+	font-weight: bold;
+	text-align: center;
+}
+
+#toolbarCenterTitlos {
+	white-space: nowrap;
+}
+
+#toolbarRight {
+	width: 49%;
+	text-align: right;
+}
+
+/*
+Πρόκειται για tabs στο toolbar ή στο ribbon, τα οποία εμφανίζονται
+ως buttons και όχι ανάμεσα σε αγκύλες όπως εμφανίζονται τα κλασικά
+tabs.
+*/
+
+.buttonTab {
+	display: inline-block;
+	padding: 2px 4px;
+	margin: 0 4px;
+
+	border-width: 1px;
+	border-color: #e0e0e0;
+	border-radius: 4px;
+}
+
+.buttonTab:hover {
+	text-shadow: 1px 0px 0px #888888;
+	border-color: #b1b1b1;
+	cursor: pointer;
+}
+
+.toolbarButtonTab {
+	border-style: none none solid solid;
+	box-shadow: 0.5px -0.5px 2px #cccccc;
+}
+
+.toolbarButtonTab:hover {
+	box-shadow: 1px -1px 2px #cccccc,
+		-0.5px 0.5px 1px #cccccc;
+}
+
+#authdeptTab {
+	background-color: #fffeee;
+}
+
+#authlevelADMIN {
+	background-color: #fff700;
+	color: #bd1010;
+}
+
+#authlevelUPDATE {
+	background-color: #fff700;
+	color: blue;
+}
+
+/******************************************************************************/
+
+#ribbon {
+	height: 3.2ex;
+	user-select: none;
+	border-style: solid none none none;
+	border-width: 2px;
+}
+
+#ribbon table {
+	width: 100%;
+	height: 100%;
+}
+
+#ribbonLeft {
+	width: 33%;
+	text-align: left;
+}
+
+#ribbonCenter {
+	text-align: center;
+}
+
+#ribbonRight {
+	width: 33%;
+	text-align: right;
+}
+
+.ribbonButtonTab {
+	border-style: solid solid none none;
+	box-shadow: 0.5px 0.5px 2px #cccccc;
+}
+
+.ribbonButtonTab:hover {
+	box-shadow: 1px 1px 2px #cccccc,
+		-0.5px -0.5px 1px #cccccc;
+}
+
+#tabBeta {
+	background-color: yellow;
+	color: midnightblue;
+	font-style: italic;
+	text-decoration: none;
+}
+
+/******************************************************************************/
+
+#ofelimo {
+	position: relative;
+	overflow-y: auto;
+}
+
+/******************************************************************************/
+
+.fyi {
+	opacity: 0;
+	font-style: italic;
+	color: midnightBlue;
+
+	padding: 3px 0;
+	background-color: rgb(255, 255, 197);
+	border-width: 2px;
+	border-color: rgba(243, 221, 181, 0.58);
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	cursor: pointer;
+}
+
+.fyi:before {
+	content: '\200B';
+}
+
+#fyiPano {
+	border-style: none none solid none;
+}
+
+#fyiKato {
+	border-style: solid none none none;
+}
+
+/******************************************************************************/
+
+.evretirio {
+	font-size: 80%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.evretirio table {
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+.evretirio table thead {
+	background-color: #f1f1f1;
+}
+
+.evretirio tr {
+	opacity: 0.85;
+	cursor: pointer;
+}
+
+.evretirio th,td {
+	padding: 1px 4px;
+	white-space: nowrap;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+}
+
+.evretirioZebra0 {
+	background-color: #e0e2ba;
+}
+
+.evretirioZebra1 {
+	background-color: #f3f3d1;
+}
+
+.evretirioPivot {
+	opacity: 1.0 !important;
+	background-color: #ffd49f;
+	text-shadow: 0px 0px 1px #000000;
+}
+
+.evretirioTarget {
+	opacity: 1.0 !important;
+	color: #08083e;
+	background-color: gold;
+	text-shadow: 0px 0px 1px #000000;
+}
+
+.evretirioMore {
+	margin-bottom: 4px;
+	font-size: 80%;
+	text-align: right;
+	color: #a90000;
+	font-style: italic;
+}
+
+.evretirioInput {
+	width: 16ch;
+}
+
+/******************************************************************************/
+
+.radio {
+	display: inline-flex;
+	align-items: center;
+	margin: 4px;
+	padding: 4px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: transparent;
+	border-radius: 5px;
+	background-color: #f5f5f5;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.radio:hover {
+	border-color: #dedede;
+	cursor: pointer;
+	text-shadow: 1px 0px #8a8a8a;
+}
+
+/******************************************************************************/
+
+.zelatina {
+	background-color: rgba(191, 224, 241, 0.2);
+	border-color: #4e7e94;
+}
+
+.zelatinaAccess {
+	background-color: rgba(113, 218, 72, 0.2);
+	border-color: #78b193;
+}
+
+.zelatinaNoAccess {
+	background-color: rgba(255, 156, 156, 0.2);
+	border-color: #af2626;
+}
+
+.tab {
+	display: inline-block;
+	margin: 0 6px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.tab:before {
+	content: '[\0020';
+	color: grey;
+	text-shadow: none !important;
+}
+
+.tab:after {
+	content: '\0020]';
+	color: grey;
+	text-shadow: none !important;
+}
+
+.tab:hover {
+	background-color: rgb(255, 254, 195);
+	color: midnightblue;
+	text-shadow: 1px 0px 0px #1628d6;
+}
+
+
+.ble {
+	color: #003366;
+}
+
+.prasino {
+	color: #104410;
+}
+
+.kokino {
+	color: #990000;
+}
+
+.kentro {
+	text-align: center;
+}
+
+.dexia {
+	text-align: right;
+}
+
+.aristera {
+	text-align: left;
+}

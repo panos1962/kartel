@@ -1,0 +1,275 @@
+#!/usr/bin/env bash
+
+[ -z "${KARTEL_BASEDIR}" ] &&
+KARTEL_BASEDIR="/var/opt/kartel"
+
+pd_tmpmax=3
+
+. "${KARTEL_BASEDIR}/lib/kartel.sh" ||
+exit 2
+
+pd_errlevel=
+pd_seterrcode \
+	"cmderr" \
+	"fterr" \
+	"mailerr" \
+	"converr" \
+	""
+
+# risky temporay file renaming
+
+pd_tmpname[1]="${pd_tmpname[1]}.txt"
+pd_tmpname[2]="${pd_tmpname[2]}.xls"
+
+txtfile="${pd_tmpname[1]}"
+xlsfile="${pd_tmpname[2]}"
+reqfile="${pd_tmpname[3]}"
+
+pd_sigtrap
+
+pd_usagemsg="[OPTIONS] [FILES]
+
+Options
+‾‾‾‾‾‾‾
+-f date, --from=date (αρχή διαστήματος YYYY-MM-DD)
+-t date, --to=date (τέλος διαστήματος YYYY-MM-DD)
+-y, --yesterday (διάστημα χθεσινής ημέρας)
+-x, --excel (output σε μορφή λογιστικού φύλλου Excel)*
+-m email, --mail=email (καθορισμός email παραλήπτη αποτελεσμάτων)...
+-c email, --cc=email (καθορισμός cc email παραλήπτη αποτελεσμάτων)...
+-b email, --bcc=email (καθορισμός bcc email παραλήπτη αποτελεσμάτων)...
+-r, --request (αποστολή κωδικών ελεγχόμενων υπηρεσιών και υπαλλήλων)
+-v, --verbose (verbose mode)
+
+*Το output πρέπει να κατευθύνεται σε αρχείο
+
+Files
+‾‾‾‾‾
+Ονόματα αρχείων με κωδικούς ελεγχομένων υπηρεσιών και υπαλλήλων. Στα αρχεία
+πρέπει να περιέχονται κωδικοί υπηρεσιών και υπαλλήλων από ένας κωδικός σε
+κάθε γραμμή. Κωδικοί της μορφής [ΑΒΓΔ][0-9]+ εκλαμβάνονται ως κωδικοί
+υπηρεσιών (Β09, Γ09001 κοκ), ενώ κωδικοί της μορφής [0-9]+ εκλαμβάνονται
+ως κωδικοί υπαλλήλων (3307, 2922 κοκ)."
+
+opts="$(getopt -n "${pd_progname}" \
+--options ":f:t:yxm:c:b:rv" \
+--long "from:,to:,yesterday,excel,mail:,cc:,bcc:,request,verbose" \
+-- "$@")" ||
+pd_usage
+
+eval set -- "${opts}"
+unset opts
+
+eos=
+excel=
+mail=
+recipient=
+reqdata=
+verbose=
+
+error=
+
+for opt in "$@"
+do
+	case "${opt}" in
+
+	# Καθορισμός αρχής χρονικού διαστήματος ελέγχου
+	-f|--from)
+		apo="$2"
+		shift 2
+		;;
+
+	# Καθορισμός τέλους χρονικού διαστήματος ελέγχου
+	-t|--to)
+		eos="$2"
+		shift 2
+		;;
+
+	# Διάστημα που αφορά στη χθεσινή ημέρα
+	-y|--yesterday)
+		apo="$(date "+%Y-%m-%d" -d yesterday)"
+		shift 1
+		;;
+
+	# Καθορισμός μορφής output ως λογιστικού φύλλου
+	-x|--excel)
+		excel="yes"
+		shift 1
+		;;
+
+	# Καθορισμός email παραλήπτη αποτελεσμάτων ελέγχου
+	-m|--mail)
+		if [ -z "${mail}" ]; then
+			mail="$(pd_push "${mail}" "-t $2")"
+			recipient="$2"
+		else
+			mail="$(pd_push "${mail}" "-c $2")"
+		fi
+
+		shift 2
+		;;
+
+	# Καθορισμός email παραλήπτη αποτελεσμάτων ελέγχου (cc)
+	-c|--cc)
+		mail="$(pd_push "${mail}" "-c $2")"
+		shift 2
+		;;
+
+	# Καθορισμός email παραλήπτη αποτελεσμάτων ελέγχου (bcc)
+	-b|--bcc)
+		mail="$(pd_push "${mail}" "-b $2")"
+		shift 2
+		;;
+
+	# Συμπερίληψη των προς έλεγχο κωδικών υπηρεσιών και υπαλλήλων
+	# στο μήνυμα που θα αποσταλεί μέσω email.
+	-r|--request)
+		request="yes"
+		shift 1
+		;;
+
+	# Εμφάνιση χρονικού διαστήματος και διευθύνσεων αποστολής email
+	# στο control terminal.
+	-v|--verbose)
+		verbose="yes"
+		shift 1
+		;;
+
+	--)
+		shift 1
+		;;
+
+	esac
+done
+unset opt
+
+[ -n "${error}" ] &&
+pd_exit "cmderr"
+
+check_output() {
+	[ -z "${excel}" ] &&
+	return 0
+
+	[ -n "${mail}" ] &&
+	return 0
+
+	[ ! -t 1 ] &&
+	return 0
+
+	pd_errmsg "terminal output not allowed (excel)"
+	return 1
+}
+
+check_output ||
+error="yes"
+
+[ -n "${error}" ] &&
+pd_exit "cmderr"
+
+check_apoeos() {
+	local err=
+	local aponum=
+	local eosnum=
+
+	[ -z "${apo}" ] &&
+	apo="$(date "+%Y-%m-%d")"
+
+	aponum="$(date +"%Y%m%d" -d "${apo}" 2>/dev/null)"
+
+	[ -z "${aponum}" ] &&
+	pd_errmsg "${apo}: λανθασμένη ημερομηνία αρχής"  &&
+	err="yes"
+
+	if [ -n "${eos}" ]; then
+		eosnum="$(date +"%Y%m%d" -d "${eos}" 2>/dev/null)"
+
+		[ -z "${eosnum}" ] &&
+		pd_errmsg "${eos}: λανθασμένη ημερομηνία τέλους"  &&
+		err="yes"
+	fi
+
+	[ -n "${err}" ] &&
+	return 1
+
+	if [ -z "${eos}" ]; then
+		eos="${apo}"
+		return 0
+	fi
+
+	[ "${eosnum}" -ge "${aponum}" ] &&
+	return 0
+
+	pd_errmsg "${apo}-${eos}: απαράδεκτο χρονικό διάστημα"
+	return 1
+}
+
+check_apoeos ||
+pd_exit "fterr"
+
+check_mail() {
+	[ -z "${mail}" ] &&
+	return 0
+
+	[ -n "${recipient}" ] &&
+	return 0
+
+	pd_errmsg "no recipient address"
+	return 1
+}
+
+check_mail ||
+pd_exit "mailerr"
+
+if [ -n "${verbose}" ]; then
+	echo "from ${apo} to ${eos}" >"/dev/tty"
+
+	[ -n "${mail}" ] &&
+	echo "email: ${mail}" >"/dev/tty"
+fi
+
+>"${reqfile}"
+awk -v apo="${apo}" -v eos="${eos}" -v reqfile="${reqfile}" \
+-f "${KARTEL_BASEDIR}/lib/kartelrpt.awk" "$@" >"${txtfile}"
+
+[ -s "${txtfile}" ] ||
+pd_exit 0
+
+if [ -z "${excel}" ]; then
+	output="${txtfile}"
+else
+	! ssconvert "${txtfile}" "${xlsfile}" 2>/dev/null &&
+	pd_errmsg "ssconvert: conversion error" &&
+	pd_exit "converr"
+
+	output="${xlsfile}"
+fi
+
+[ -z "${mail}" ] &&
+cat "${output}" &&
+pd_exit 0
+
+{
+	echo "<p>Σας έχει αποσταλεί συνημμένο"
+
+	if [ -n "${excel}" ]; then
+		echo "λογιστικό φύλλο"
+	else
+		echo "αρχείο"
+	fi
+
+	echo " χτυπημάτων καρτών για το διάστημα 
+<b>${apo}</b> έως <b>${eos}</b>.</p>"
+
+	if [ -n "${request}" ]; then
+		echo "<p>Τα χτυπήματα αφορούν στους παρακάτω κωδικούς:<ul>"
+		cat "${reqfile}"
+		echo "</ul></p>"
+	fi
+} |
+pd_sendmail \
+-f "kartel@thessaloniki.gr" \
+-s "ΧΤΥΠΗΜΑΤΑ ΚΑΡΤΩΝ" \
+-a "${output}" \
+${mail}
+
+pd_exit $?

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Στο παρόν configuartion file καταγράφουμε τα στοιχεία που είναι απαραίτητα
+# για να προσπελάσουμε την απομεμακρυσμένη database "erpota". Θυμίζουμε ότι
+# η συγκεκριμένη database είναι ORACLE database και περιέχει το «Ολοκληρωμένο
+# Πληροφοριακό Σύστημα Οικονομικών Υπηρεσιών» (ΟΠΣΟΥ), στο οποίο περιλαμβάνεται
+# και το «Υποσύστημα Διαχείρισης Ανθρώπινων Πόρων» όπου κρατούνται τα στοιχεία
+# προσωπικού που είναι απαραίτητα στην εφαρμογή "kartel".
+
+DBUSERNAME="kartel"
+DBUSERPASS="XXXXXXXXXX"
+DBHOST="erpota"
+DBPORT="1234"
+DBSID="orcl"
+DBSCHEMA="ERPOTA"
+DBNLSLANG="AMERICAN_AMERICA.AL32UTF8"

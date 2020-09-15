@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+
+echo "usage: ${progname} [OPTIONS]
+
+Options
+-------
+
+-a		Filter events greater but not equal to the specified value
+		('>' operator will be used).
+
+-A		Filter events greater or equal to the specified value
+		('>=' operator will be used).
+
+-e		Filter events less than or equal to the specified value
+		('<=' operator will be used).
+
+-E		Filter events less than but not equal to the specified value
+		('<' operator will be used).
+
+-t		Select today's events
+
+-y		Select yesterday's events
+
+-C cards	Specify card numbers separated by any non-numeric character:
+
+			-c 2011,34596,97408
+
+		Can be used repeatedly;
+
+			-c 2011,34596,97408 -c 10018 -c 10020,10022
+
+-k rdtype	By default '${progname}' selects all card events, but we can
+		filter events using -m option. Mode can be one or more of:
+
+		I[N]		Entrance reader event
+		O[UT]		Exit reader event
+		A[CCESS]	Door unlock reader
+
+		You can use that option repeatedly. You can also specify
+		multiple types using comma (or any other non-letter character)
+		separated modes.
+
+		Warning
+		*******
+		Reader type is based on reader name.
+		If name contains ':IN:' then it will be considered as entrance
+		reader.
+		If name contains ':OUT:' then it will be considered as
+		exit reader.
+		If name contains ':ACCESS:' then it will be considered as door
+		unlock reader.
+
+-r		SQL will select [History] rows in ascenting order on
+		[History].[RecordID] column. Default order is descenting.
+
+-R		[History] rows will be printed in descenting order on
+		[History].[RecordID] column. Default print order is ascenting.
+
+-n rows		Select only top number of rows according to 'rows' argument
+		(default 10 rows). If set to zero then all rows will be
+		selected, except when in poll mode where no initial rows will
+		be printed.
+
+-s		Silent mode. Rows are not printed. Useful for database updates.
+
+--separator=sep	Use 'separator' as output field separator character. Default
+		separator is the tab character.
+
+-S sclcmd	Specify sqlcmd full pathname. Default is 'KARTEL_SQLCMD'
+		environment variable; if not set defaults to
+		'/opt/mssql-tools/bin/sqlcmd'
+
+-Q		Just check SQL script, do not run SQL.
+
+-p		Poll mode. Checks every 1 second and prints new events detected.
+
+-d delay	Set poll mode but checks everi 'delay' seconds.
+
+-c count	When in poll mode, program will exit after 'count' times of polling.
+
+-v		Verbose mode off; print less messages.
+
+-M mailspecs	XXX
+
+-b		Database (insert)
+
+-B		Database (replace)
+
+-q		Quiet mode. Turns off verbose mode, no messages are printed to the control
+		terminal.
+
+-h		Print short help, do not run program.
+
+-H		Print long help, do not run program.
+
+-D option	Debug mode. Argument 'option' is a string that may contain one or more of the
+		following characters:
+
+		c	Print the constructed command line that will be called successively in
+			poll mode.
+	
+		r	Print the [GenTime] or [RecordID] constraints given in the command
+			line.
+
+		q	Print constructed SQL queries.
+	
+		d	Print the final debug option string itself.
+	
+		a	Turn on all of the above options.
+
+		The same arguments can be given in capital letters rather than in lowercase
+		letters. If a debug option is is in capital, then the program will terminate
+		immediately after printing the related debugging messages.
+
+-w width	Specifies the width of the output of the debug messages. However, if the
+		output of the debug messages is a terminal, the width will automatically set
+		to the width of the terminal display.
+
+Arguments
+---------
+
+Program takes at most two arguments. Arguments may specify range of events either based
+on event 'RecordID' or on event 'GenTime' according to the argument type; If type is
+a plain integer number, then the argument will be considered as 'RecordID', else it will
+be considered as 'GenTime'.
+
+First argument 'from' will filter events greater than or equal to the specified value,
+using '>=' operator. Option -F affects the comparison using '>' operator.
+
+Second argument 'to' will filter events less than the specified value, using '<' operator.
+Option -T affects the comparison using '<=' operator.
+
+Warning
+*******
+
+There are some WIN-PAK isssues that we are not sure about. After checking tons of
+events, we assume the following assumptions to be correct:
+
+Events are filtered on 'History.Param2' values 30 and 79.
+
+Events are filtered on 'HWIndependetDevices.DeviceType' value 50.
+
+Events are filtered on 'History.Param3' to be a valid card number,
+that is 'Card.CardNumber' with positive 'Card.CardStatus' values." >&2
+
+pd_exit

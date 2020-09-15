@@ -1,0 +1,25 @@
+#formaIpalilos {
+	width: 12ch;
+}
+
+#formaOnoma {
+	width: 50ch;
+}
+
+#formaRowid {
+	width: 12ch;
+}
+
+
+.formaTrexon {
+	display: inline-block;
+}
+
+.formaTrexon:hover {
+	text-shadow: 0px 1px 0px black;
+	cursor: pointer;
+}
+
+.formaRadio:hover {
+	cursor: pointer;
+}

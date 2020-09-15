@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Το παρόν configuration file περιέχει παραμέτρους και credentials προκειμένου
+# να προσπελάσουμε την απομεμακρυσμένη database του WIN-PAK. Πρόκειται για MS
+# SQL Server database, επομένως την προσπελαύνουμε μέσω του free SQL client
+# "sqlcmd" της εταιρείας Miscrosoft. Για να είμαστε ακριβείς, χρησιμοποιούμε
+# το πρόγραμμα "pd_sqlcmd" της βιβλιοθήκης "pandora" που αποτελεί ένα βολικό
+# front-end interface προς το πρόγραμμα "sqlcmd".
+
+server="winpak"
+port="12345"
+username="kartel"
+userpass="XXXXXXXXXX"
+database="WIN-PAK PRO"

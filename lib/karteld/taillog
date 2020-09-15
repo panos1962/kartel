@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+[ -z "${PANDORA_BASEDIR}" ] &&
+PANDORA_BASEDIR="/var/opt/pandora"
+
+! . "${PANDORA_BASEDIR}/lib/pandora.sh" &&
+exit 2
+
+pd_usagemsg="errlog"
+pd_errlevel=
+
+pd_seterrcode \
+	"fserr" \
+	"noperm" \
+	"conferr" \
+	"dmnerr" \
+	""
+
+log="$1"
+
+case "${log}" in
+out)
+	desc="message"
+	;;
+err)
+	desc="error"
+	;;
+*)
+	pd_usage
+	;;
+esac
+
+shift
+[ $# -ne 1 ] &&
+pd_usage
+
+[ ! -r "$1" ] &&
+pd_errmsg "$1: cannot read ${desc} log" &&
+pd_exit "fserr"
+
+echo "$(pd_tout reset bold fblue)
+$1$(pd_tout)"
+
+[ ! -s "$1" ] &&
+echo "$(pd_tout fwhite bcyan)NO ${desc^^}S ENCOUNTERED!$(pd_tout)" &&
+pd_exit
+
+echo "$(pd_tout bold fyellow bred)*** ${desc^^}S ENCOUNTERED ***$(pd_tout reset fyellow)
+..."
+tail --lines=10 "$1"
+pd_tout

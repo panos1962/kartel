@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+[ -z "${PANDORA_BASEDIR}" ] &&
+PANDORA_BASEDIR="/var/opt/pandora"
+
+! . "${PANDORA_BASEDIR}/lib/pandora.sh" &&
+exit 2
+
+pd_seterrcode \
+	"cferr" \
+	"baseerr" \
+	"installerr" \
+	"usererr" \
+	""
+
+unset install_opts
+unset kartel_opts
+
+conf="local/test.cf"
+[ -s "${conf}" ] &&
+! . "${conf}" &&
+pd_exit "cferr"
+
+[ -z "${label}" ] &&
+label="kartel"
+
+[ -z "${group}" ] &&
+group="${label}"
+
+[ -z "${user}" ] &&
+user="${label}"
+
+[ -z "${basedir}" ] &&
+basedir="/var/opt/${label}"
+
+[ -e "${basedir}/karteld/lock/pid" ] &&
+${basedir}/bin/karteld stop
+
+pd_ttymsg "$(pd_tmsg dim)
+Backing up '$(pd_tmsg bold fgreen)erpota$(pd_tmsg reset dim)' database…"
+install/backup/backup.sh "${user}"
+
+pd_ttymsg "Deleting local user '$(pd_tmsg bold fred)${user}$(pd_tmsg reset dim)'…"
+userdel -r "${user}" >/dev/null 2>&1
+
+pd_ttymsg "Deleting local group '$(pd_tmsg bold fred)${group}$(pd_tmsg reset dim)'…"
+groupdel "${group}" >/dev/null 2>&1
+
+[ -d "${basedir}" ] &&
+pd_ttymsg "Removing existing installation '$(pd_tmsg bold fred)${basedir}$(pd_tmsg reset dim)'…" &&
+! rm -rf "${basedir}" &&
+pd_exit "baseerr"
+
+pd_ttymsg "
+Installing '$(pd_tmsg bold fblue)${label}$(pd_tmsg reset dim)' application…"
+install/install \
+	--label="${label}" \
+	--basedir="${basedir}" \
+	--group="${group}" \
+	--user="${user}" \
+	${install_opts} ||
+pd_exit "installerr"
+
+pd_ttymsg "
+$(pd_tmsg dim)Restoring data…
+Table '$(pd_tmsg bold fblue)prosvasi$(pd_tmsg reset dim)'…"
+install/backup/restore.sh
+
+id "${user}" >/dev/null ||
+pd_exit "usererr"
+
+exec_test() {
+	[ -z "$@" ] &&
+	return 0
+
+	pd_ttymsg "
+$(pd_tmsg dim)Testing $(pd_tmsg reset fgreen)>>$(pd_tmsg reset bold fyellow)$@$(pd_tmsg reset fgreen)<<$(pd_tmsg)"
+
+	echo "$@" | su - "${user}"
+}
+
+exec_test "${kartel_test}"
+exec_test "${erpota_test}"
+exec_test "${karteld_test}"

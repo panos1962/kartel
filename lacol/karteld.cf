@@ -1,0 +1,14 @@
+# Το παρόν configuration file αφορά στη συμπεριφορά του "karteld" daemon. Πιο
+# συγκεκριμένα, πρόκειται για τις default options με τις οποίες θα εκκινεί ο
+# "karteld" daemon μέσω της εντολής:
+#
+#	karteld start
+#
+# ή
+#
+#	karteld restart
+
+--rows=0
+--delay=10
+--database=INSERT
+--mail

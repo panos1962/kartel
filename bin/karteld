@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+[ -z "${PANDORA_BASEDIR}" ] &&
+PANDORA_BASEDIR="/var/opt/pandora"
+
+[ -z "${KARTEL_BASEDIR}" ] &&
+KARTEL_BASEDIR="/var/opt/kartel"
+
+! . "${PANDORA_BASEDIR}/lib/pandora.sh" &&
+exit 2
+
+pd_usagemsg="$(pd_terr reset dim){$(pd_terr) $(pd_terr reset bold fyellow)status$(pd_terr) \
+$(pd_terr dim)|$(pd_terr) $(pd_terr bold fyellow)start$(pd_terr) \
+$(pd_terr dim)|$(pd_terr) $(pd_terr bold fyellow)stop$(pd_terr) \
+$(pd_terr dim)|$(pd_terr) $(pd_terr bold fyellow)restart$(pd_terr) \
+$(pd_terr dim)|$(pd_terr) $(pd_terr bold fyellow)logs$(pd_terr) \
+$(pd_terr dim)|$(pd_terr) $(pd_terr bold fyellow)messages$(pd_terr) \
+$(pd_terr dim)|$(pd_terr) $(pd_terr bold fyellow)errors$(pd_terr) \
+$(pd_terr dim)} [$(pd_terr)$(pd_terr fcyan)ARGS...$(pd_terr reset dim)]$(pd_terr)
+
+	$(pd_terr bold fyellow)start$(pd_terr) $(pd_terr dim)[$(pd_terr reset fcyan)KARTEL_OPTIONS...$(pd_terr reset dim)]$(pd_terr)
+	$(pd_terr bold fyellow)restart$(pd_terr) $(pd_terr dim)[$(pd_terr reset fcyan)KARTEL_OPTIONS...$(pd_terr reset dim)]$(pd_terr)
+	$(pd_terr bold fyellow)logs$(pd_terr) $(pd_terr dim)[$(pd_terr reset fcyan)LINES$(pd_terr reset dim)]$(pd_terr)
+	$(pd_terr bold fyellow)messages$(pd_terr) $(pd_terr dim)[$(pd_terr reset fcyan)LINES$(pd_terr reset dim)]$(pd_terr)
+	$(pd_terr bold fyellow)errors$(pd_terr) $(pd_terr dim)[$(pd_terr reset fcyan)LINES$(pd_terr reset dim)]$(pd_terr)"
+pd_errlevel=
+pd_seterrcode \
+	"cmderr" \
+	"fserr" \
+	"noperm" \
+	"conferr" \
+	"dmnerr" \
+	"internal" \
+	""
+
+basedir="${KARTEL_BASEDIR}"
+
+[ "${pd_progpath}" != "${basedir}/bin" ] &&
+pd_errmsg "${basedir}: invalid directory" &&
+pd_exit "cmderr"
+
+dmndir="${basedir}/${pd_progname}"
+libdir="${basedir}/lib/karteld"
+logdir="${basedir}/karteld/log"
+lckdir="${dmndir}/lock"
+pidfile="${lckdir}/pid"
+
+. "${KARTEL_BASEDIR}/lib/karteld/util.sh" ||
+pd_exit "fserr"
+
+mode="$(pd_partmatch -iv "$1" status start stop restart logs messages errors)"
+shift
+
+case "${mode}" in
+status)
+	extra_args "$@"
+	exec_status
+	;;
+stop)
+	extra_args "$@"
+	exec_stop
+	;;
+start)
+	exec_start "$@"
+	;;
+restart)
+	exec_restart "$@"
+	;;
+logs)
+	exec_logs -oe "$@"
+	;;
+messages)
+	exec_logs -o "$@"
+	;;
+errors)
+	exec_logs -e "$@"
+	;;
+*)
+	pd_usage
+	;;
+esac

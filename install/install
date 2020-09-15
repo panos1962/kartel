@@ -1,0 +1,187 @@
+#!/usr/bin/env bash
+
+# Το πρόγραμμα που ακολουθεί εγκαθιστά εφαρμογή επικοινωνίας με το σύστημα
+# WIN-PAK (version SE 4/6) της εταιρείας Honeywell, που καταγράφει συμβάντα
+# ανάγνωσης καρτών από ειδικούς καρταναγνώστες εισόδου/εξόδου και πρόσβασης
+# σε φυλασσόμενους χώρους. Το πρόγραμμα αναπτύχθηκε, ελέγχθηκε και λειτουργεί
+# σε σύστημα Linux Ubuntu 16.04.
+#
+# Για την κατασκευή των προγραμμάτων απασχολήθηκαν οι παρακάτω υπάλληλοι και
+# στελέχη του Τμήματος Μηχανογραφικής Υποστήριξης της Διεύθυνσης Επιχειρησιακού
+# και Συστημάτων ΤΠΕ:
+#
+#	Ηλίας Στραβάκος
+#	Δώρα Καργάκη
+#	Ανδρέας Κορδονούρης
+#	Πάνος Παπαδόπουλος
+
+[ -z "${PANDORA_BASEDIR}" ] &&
+PANDORA_BASEDIR="/var/opt/pandora"
+
+pd_tmpmax=1
+
+. "${PANDORA_BASEDIR}/lib/pandora.sh" ||
+exit 2
+
+tmp1="${pd_tmpname[1]}"
+
+pd_sigtrap
+
+pd_seterrcode \
+	"callerr" \
+	"noadmin" \
+	"command" \
+	"utilerr" \
+	"label" \
+	"basedir" \
+	"checkerr" \
+	"createerr" \
+	"fserr" \
+	""
+
+# Όλες οι βασικές λειτουργίες του προγράμματος έχουν γραφεί ως functions και
+# βρίσκονται στο αρχείο "install/util.sh" το οποίο ενσωματώνουμε στο παρόν
+# ευθύς αμέσως.
+
+. "${pd_progpath}/util.sh" ||
+pd_exit "utilerr"
+
+eval set -- "$(pd_parseopts \
+"l:i:u:U:g:G:W:wA:aK:kE:eM:mXT" \
+"label:,basedir:,begin-date:,
+user:,uid:,useradd:,
+group:,gid:,groupadd:,
+wpconf:,winpak,
+dbadmincf:,dbadmin,
+karteldbcf:,karteldb,
+erpotadbcf:,erpotadb,
+mailcf:,mail,
+install,test" "$@")"
+[ $1 -ne 0 ] && pd_usage
+shift
+
+begin_date=
+
+user=
+uid=
+useradd="1"
+
+group=
+gid=
+groupadd="1"
+
+dbadmincf=
+karteldbcf=
+erpotadbcf=
+wpconf=
+mailcf=
+karteldcf="local/karteld.cf"
+
+check="yes"
+
+rmshcmnt="${PANDORA_BASEDIR}/bin/pd_rmshcmnt"
+dirmode="750"
+tmpmode="770"
+excmode="750"
+txtmode="640"
+
+for arg in "$@"
+do
+	case "${arg}" in
+	-l|--label)	label="$2";				shift 2;;
+	-i|--basedir)	basedir="$2";				shift 2;;
+	--begin-date)	begin_date="$2";			shift 2;;
+
+	-u|--user)	user="$2";				shift 2;;
+	-U|--uid)	uid="$2";				shift 2;;
+	--useradd)
+			useradd="$(pd_yesno "$2")"
+
+			[ "${useradd}" == "0" ] &&
+			groupadd="0"
+								shift 2;;
+
+	-g|--group)	group="$2";				shift 2;;
+	-G|--gid)	gid="$2";				shift 2;;
+	--groupadd)	groupadd="$(pd_yesno "$2")"		shift 2;;
+
+	-W|--wpconf)	wpconf="$2";				shift 2;;
+	-w|--winpak)	wpconf="local/winpak.cf";		shift 1;;
+
+	-A|--dbadmincf)	dbadmincf="$2";				shift 2;;
+	-a|--dbadmin)	dbadmincf="local/dbadmin.cf";		shift 1;;
+
+	-B|--karteldbcf)karteldbcf="$2";			shift 2;;
+	-b|--karteldb)	karteldbcf="local/karteldb.cf";		shift 1;;
+
+	-M|--mailcf)	mailcf="$2";				shift 2;;
+	-m|--mail)	mailcf="local/mail.cf";			shift 1;;
+
+	-E|--erpotadbcf)erpotadbcf="$2";			shift 2;;
+	-e|--erpotadb)	erpotadbcf="local/erpotadb.cf";		shift 1;;
+
+	-D|--karteldcf)	karteldcf="$2";				shift 2;;
+	-X|--install)	check=;					shift 1;;
+
+	# Η option "-T" θέτει το πρόγραμμα σε test mode, όπου
+	# τα προγράμματα μεταφέρονται αυτούσια, χωρίς απαλοιφές
+	# σχολίων κλπ, προκειμένου να είναι ευανάγνωστα. Επίσης,
+	# τα directory και file permissions είναι αρκετά χαλαρά
+	# προκειμένου να μπορεί κανείς να διαβαζει τον κώδικα,
+	# πράγμα απαραίτητο κατά την αποσφαλμάτωση και κατά την
+	# περίοδο των δοκιμών.
+
+	-T|--test)
+		rmshcmnt="cat"
+		dirmode="755"
+		tmpmode="777"
+		excmode="755"
+		txtmode="644"
+		shift 1
+		;;
+	--)
+		shift 1
+		;;
+	esac
+done
+
+[ $# -gt 0 ] &&
+pd_usage
+
+check_label 	|| err="yes"
+check_basedir 	|| err="yes"
+check_bgdate 	|| err="yes"
+check_user 	|| err="yes"
+check_group 	|| err="yes"
+check_wpconf 	|| err="yes"
+check_dbconf 	|| err="yes"
+check_mailcf 	|| err="yes"
+check_erpotacf 	|| err="yes"
+
+[ -n "${err}" ] &&
+pd_exit "checkerr"
+
+[ -n "${check}" ] &&
+display &&
+pd_exit
+
+export KARTEL_BASEDIR="${basedir}"
+
+update_sysenv &&
+update_sysprof
+
+[ $? -ne 0 ] &&
+pd_exit "permerr"
+
+create_group	|| err="yes"
+create_user	|| err="yes"
+create_basis	|| err="yes"
+create_files	|| err="yes"
+create_mail	|| err="yes"
+create_home	|| err="yes"
+create_database || err="yes"
+
+[ -n "${err}" ] &&
+pd_exit "createerr"
+
+pd_exit

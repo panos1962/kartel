@@ -1,0 +1,198 @@
+#ofelimo {
+	overflow-y: scroll;
+}
+
+#filtroApo {
+	width: 10.5ch;
+}
+
+#panelArgies {
+	cursor: pointer !important;
+}
+
+#filtroMeres {
+	width: 4ch;
+}
+
+#meraMeres {
+	font-style: italic;
+	opacity: 0.8;
+}
+
+#pinakas {
+	width: 99.99%;
+	border-style: none;
+	border-collapse: collapse;
+}
+
+#pinakas td,th {
+	padding: 4px;
+
+	border-width: 1px;
+	border-color: rgba(106, 126, 179, 0.2);
+	border-style: solid;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#events tr {
+	border-style: none;
+}
+
+#events tr:hover {
+	background-color: rgba(255, 214, 0, 0.4);
+}
+
+.argia:hover {
+	background-color: rgba(125, 116, 4, 0.34) !important;
+}
+
+#epikefalida {
+	text-align: center;
+	background-color: rgba(255, 224, 0, 0.5);
+	color: #010654;
+}
+
+#epikefalida td {
+	position: relative;
+}
+
+.secondaryColumn {
+	display: none;
+}
+
+.multiIndicator {
+	padding: 0 !important;
+	width: 18px;
+	text-align: center;
+	border-style: solid none solid solid !important;
+}
+
+.multiOpen {
+	color: #327232;
+	cursor: zoom-in;
+}
+
+.multiClose {
+	transform: rotate(180deg);
+	color: #0d4577;
+	cursor: zoom-out;
+}
+
+.dow {
+	text-align: right;
+	width: 10ch;
+	border-style: solid solid solid none !important;
+}
+
+.date {
+	width: 10.5ch;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.rowid {
+	position: relative;
+	width: 10ch;
+	min-width: 10ch;
+	max-width: 10ch;
+	text-align: center;
+	color: rgba(103, 59, 1, 0.7);
+	cursor: zoom-in;
+}
+
+.rowid:hover {
+	text-shadow: 1px 0px 0px #93983c
+}
+
+.rowidProapo {
+	padding-left: 0;
+	padding-right: 0;
+	font-size: 80%;
+	letter-spacing: -0.5px;
+	color: #124e9c;
+}
+
+.rowidApousia {
+	color: #af0000;
+}
+
+.ora {
+	width: 5.5ch;
+	min-width: 5.5ch;
+	max-width: 5.5ch;
+	text-align: center;
+}
+
+.site {
+	font-size: 80%;
+	width: 14ch;
+}
+
+.siteProapo {
+	color: #055a84;
+	font-style: italic;
+}
+
+.karta {
+	text-align: center;
+	width: 5.5ch;
+	min-width: 5.5ch;
+	max-width: 5.5ch;
+}
+
+.orario {
+	text-align: center;
+	width: 9.5ch;
+	min-width: 9.5ch;
+	max-width: 9.5ch;
+}
+
+.excuse {
+	background-color: #fdff60;
+}
+
+.apousia {
+	background-color: #ff4a4a;
+}
+
+.rowidZoomed {
+	background-color: #ffa888;
+	cursor: zoom-in;
+}
+
+.rest {
+	display: none;
+	background-color: rgba(234, 234, 234, 0.5);
+	opacity: 0.9;
+}
+
+.eventIdHeader {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	font-size: 80%;
+	font-style: italic;
+	color: #3c2816;
+	cursor: auto;
+}
+
+.filtraTabOff {
+	color: #cc0000;
+}
+
+/******************************************************************************/
+
+.zebra0 {
+	background-color: rgba(220, 200, 41, 0.2);
+}
+
+.zebra1 {
+	background-color: rgba(255, 249, 0, 0.1);
+}
+
+.anenergo {
+	color: grey;
+}

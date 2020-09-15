@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Το παρόν configuration file περιέχει τα ονόματα των local databases και τα
+# credentials του database user ο οποίος έχει τα προσήκοντα δικαιώματα στις
+# συγκεκριμένες databases.
+
+karteldb="kartel"
+
+erpotadb="erpota"
+erpota12=
+
+dbuser="kartel"
+dbuser="XXXXXXXXX"
+dbpassword="XXXXXXXXX"

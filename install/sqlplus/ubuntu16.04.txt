@@ -1,0 +1,55 @@
+Install tools on Ubuntu 16.04
+Use the following steps to install the SQL*plus on Ubuntu.
+
+Download .rpm package from:
+
+https://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html
+
+oracle-instantclinet*-basic-*.rpm
+oracle-instantclinet*-devel-*.rpm
+oracle-instantclinet*-sqlplus-*.rpm
+
+Install alien (sudo apt-get install alien)
+
+Convert the rpm files and install
+sudo alien -i oracle-instantclinet*-basic-*.rpm
+sudo alien -i oracle-instantclinet*-devel-*.rpm
+sudo alien -i oracle-instantclinet*-sqlplus-*.rpm
+
+Install libaio1
+
+Add oracle.conf:
+
+(echo /usr/lib/oracle/12.1/client/lib > /etc/ld.so.conf.d/oracle.conf)
+
+and Reload .conf (sudo ldconfig)
+
+If
+
+libsqlplus.so: cannot open shared object file: No such file or directory
+
+is displayed when execute sqlplus, άλλαξε το path:
+
+/usr/lib/oracle/12.1/client/lib
+
+αν εγκατασταθεί σε διαφορετικό.
+
+*** Από εδώ και κάτω δεν λειτούργησε καλά ***
+
+Μετά μπορείς να φτιάξεις ένα tnsnames.ora αρχείο και να βάλεις μέσα το tns entry της βάσης.
+ 
+ORCL =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 10.65.2.42)(PORT = 1521))
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 10.65.2.43)(PORT = 1521))
+    (LOAD_BALANCE = yes)
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = orcl)
+    )
+  )
+ 
+και πρέπει να κάνεις export TNS_ADMIN=/usr/lib/oracle/12.1/client/lib αν το
+έχεις αποθηκεύσει σε εκείνο το directory, αλλιώς, τo directory όπου το έχεις
+σώσει. Καλό είναι το export να το προσθέσεις στο ~/.bash_profile για να τρέχει
+κάθε φορά που κάνεις login.

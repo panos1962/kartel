@@ -1,0 +1,25 @@
+Install tools on Ubuntu 16.04
+Use the following steps to install the mssql-tools on Ubuntu.
+
+Import the public repository GPG keys.
+
+	curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+
+Register the Microsoft Ubuntu repository.
+
+	curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+
+Update the sources list and run the installation command with the unixODBC developer package.
+
+	sudo apt-get update 
+	sudo apt-get install mssql-tools unixodbc-dev
+
+Note
+
+To update to the latest version of mssql-tools run the following commands:
+
+	sudo apt-get update 
+	sudo apt-get install mssql-tools 
+
+	echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+	echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc

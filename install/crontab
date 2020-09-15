@@ -1,0 +1,8 @@
+SHELL=/bin/bash
+PANDORA_BASEDIR=/var/opt/pandora
+KARTEL_BASEDIR=/var/opt/kartel
+HOME=/home/kartel
+PATH=/usr/local/bin:/usr/bin:/bin:/var/opt/pandora/bin:/var/opt/kartel/bin
+DATADIR=/home/kartel/erpota
+
+11 3 * * mon-fri erpota --dbload --keep-file-copy=yes --file-copy-dir=$DATADIR --ipalilos-file=ipalilos.tsv --metavoli-file=metavoli.tsv --nullwarn=false >$HOME/erpota/erpota.out 2>$HOME/erpota/erpota.err
