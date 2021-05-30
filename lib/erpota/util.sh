@@ -8,6 +8,9 @@ PANDORA_BASEDIR="/var/opt/pandora"
 [ -z "${KARTEL_BASEDIR}" ] &&
 KARTEL_BASEDIR="/var/opt/kartel"
 
+[ -z "${LETRAK_BASEDIR}" ] &&
+LETRAK_BASEDIR="/var/opt/letrak"
+
 ! . "${KARTEL_BASEDIR}/lib/kartel.sh" &&
 exit 2
 
@@ -451,6 +454,7 @@ load_data() {
 	awkargs+=" -v ipalilos=${tmp_ipalilos}"
 	awkargs+=" -v ipiresia=${tmp_ipiresia}"
 	awkargs+=" -v metavoli=${tmp_metavoli}"
+	awkargs+=" -v letrakdir=${LETRAK_BASEDIR}"
 
 	awkargs+=" -f ${erpotalibdir}/dbload.awk"
 

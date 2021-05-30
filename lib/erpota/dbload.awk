@@ -31,6 +31,7 @@ BEGIN {
 	truncate_tables()
 	load_tables()
 	add_relations()
+	system(letrakdir "/bin/erpotaJSON " kartel_dbconf["erpota12"])
 
 	kartel_erpota12_update(kartel_dbconf["erpota12"])
 	ttymsg("Current 'erpota' database version: " kartel_dbconf["erpota12"])
