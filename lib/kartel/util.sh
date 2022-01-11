@@ -1289,7 +1289,7 @@ WHERE
 \t[History].[Link1] = [HWIndependentDevices].[DeviceID]
 \tAND [History].[Type1] = 9
 \tAND [History].[Type2] = 0
-\tAND [History].[Param2] IN (30, 79)
+\tAND [History].[Param2] IN (30, 79, 10)
 \tAND [History].[Note] IS NOT NULL
 \tAND [HWIndependentDevices].[DeviceType] = 50"
 
