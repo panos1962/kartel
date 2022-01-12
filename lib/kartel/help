@@ -136,7 +136,7 @@ Warning
 There are some WIN-PAK isssues that we are not sure about. After checking tons of
 events, we assume the following assumptions to be correct:
 
-Events are filtered on 'History.Param2' values 30 and 79.
+Events are filtered on 'History.Param2' values 30, 79, 10.
 
 Events are filtered on 'HWIndependetDevices.DeviceType' value 50.
 
