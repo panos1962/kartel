@@ -218,19 +218,25 @@ ORDER BY
 CREATE VIEW `karta` AS
 
 SELECT
-	`basipal`.*,
+	`ipalilos`.`kodikos` AS `ipalilos`,
+	`ipalilos`.`eponimo`,
+	`ipalilos`.`onoma`,
+	`ipalilos`.`patronimo`,
+	`ipalilos`.`genisi`,
+	`ipalilos`.`premail`,
+	`ipalilos`.`ipemail`,
 	`metavoli`.`efarmogi`,
 	`metavoli`.`lixi`,
-	`metavoli`.`timi`
+	`metavoli`.`timi` AS `karta`
 
-FROM `basipal` LEFT JOIN `metavoli`
+FROM `ipalilos` LEFT JOIN `metavoli`
 
-ON `metavoli`.`ipalilos` = `basipal`.`ipalilos`
+ON `metavoli`.`ipalilos` = `ipalilos`.`kodikos`
 
 WHERE `idos` = 'ΚΑΡΤΑ'
 
 ORDER BY
-	`basipal`.`ipalilos`,
+	`ipalilos`.`kodikos`,
 	`metavoli`.`efarmogi`,
 	`metavoli`.`lixi`
 ;

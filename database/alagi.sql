@@ -10,7 +10,7 @@ SELECT
 	`ipalilos`.`ipemail`,
 	`metavoli`.`efarmogi`,
 	`metavoli`.`lixi`,
-	`metavoli`.`timi`
+	`metavoli`.`timi` AS `karta`
 
 FROM `ipalilos` LEFT JOIN `metavoli`
 
