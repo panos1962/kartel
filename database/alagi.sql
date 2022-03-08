@@ -1,11 +1,25 @@
-CONNECT `erpota1`
-;
+ALTER VIEW `karta` AS
 
-ALTER TABLE `metavoli` CHANGE `idos`
-`idos` ENUM(
-	'ΔΙΕΥΘΥΝΣΗ',
-	'ΤΜΗΜΑ',
-	'ΓΡΑΦΕΙΟ',
-	'ΚΑΡΤΑ',
-	'ΩΡΑΡΙΟ'
-) NOT NULL COMMENT 'Είδος μεταβολής';
+SELECT
+	`ipalilos`.`kodikos` AS `ipalilos`,
+	`ipalilos`.`eponimo`,
+	`ipalilos`.`onoma`,
+	`ipalilos`.`patronimo`,
+	`ipalilos`.`genisi`,
+	`ipalilos`.`premail`,
+	`ipalilos`.`ipemail`,
+	`metavoli`.`efarmogi`,
+	`metavoli`.`lixi`,
+	`metavoli`.`timi`
+
+FROM `ipalilos` LEFT JOIN `metavoli`
+
+ON `metavoli`.`ipalilos` = `ipalilos`.`kodikos`
+
+WHERE `idos` = 'ΚΑΡΤΑ'
+
+ORDER BY
+	`ipalilos`.`kodikos`,
+	`metavoli`.`efarmogi`,
+	`metavoli`.`lixi`
+;
