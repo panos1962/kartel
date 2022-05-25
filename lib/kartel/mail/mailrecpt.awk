@@ -25,6 +25,11 @@ BEGIN {
 	reader = $(nf++)
 	info = $(nf++)
 
+	if (email !~ /^[a-zA-Z][a-zA-Z0-9_.-]*@[a-zA-Z][a-zA-Z0-9_.-]*\.[a-zA-Z]{2,4}$/) {
+		pd_errmsg($0 ": invalid email")
+		next
+	}
+
 	pubkey = (NF > 6 ? $(nf++) : "")
 	password = (NF > 7 ? $(nf++) : "")
 
