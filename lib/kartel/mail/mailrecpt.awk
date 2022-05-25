@@ -12,7 +12,7 @@ BEGIN {
 		pd_errmsg($0 ": syntax error")
 		next
 	}
-	
+
 	nf = 1
 
 	gsub(/\\/, "\\\\")
