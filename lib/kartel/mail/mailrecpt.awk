@@ -2,7 +2,7 @@
 
 BEGIN {
 	OFS = ": "
-	EOD = ""
+	EOD = "+++"
 
 	read_message()
 }
@@ -104,7 +104,7 @@ function prosvasi_data(pubkey, password, card) {
 	return
 
 	print \
-	"<hr>" \
+	"<hr />" \
 	"<p>" \
 	"Μπορείτε να δείτε τα συμβάντα που σας αφορούν " \
 	kartel_link("εδώ") "." \
