@@ -2,4 +2,5 @@ panos*
 *.swp
 *.min.js
 local/*
+lib/conf/*
 !local/README.txt
