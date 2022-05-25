@@ -65,7 +65,7 @@ function mailrecpt(email, rowid, card, time, info, pubkey, password) {
 	print "Content-Disposition", "inline"
 
 	print \
-	"<html>" \
+	"<html>\n" \
 	"<body>"
 
 	if (message)
@@ -78,11 +78,11 @@ function mailrecpt(email, rowid, card, time, info, pubkey, password) {
 	"<pre " style_data() ">\n" \
 	"RecordID...", "<strong>" rowid "</strong>\n" \
 	"Card number", "<strong>" card "</strong>\n" \
-	"Date/Time..", "<strong>" time "</strong\n>"
+	"Date/Time..", "<strong>" time "</strong>\n"
 
 	if (info)
 	print \
-	"Location...", "<strong>" info "</strong\n>"
+	"Location...", "<strong>" info "</strong>\n"
 
 	print \
 	"</pre>"
@@ -90,12 +90,12 @@ function mailrecpt(email, rowid, card, time, info, pubkey, password) {
 	prosvasi_data(pubkey, password, card)
 
 	print \
-	"</body>" \
+	"</body>\n" \
 	"</html>"
 
 	print EOD
 	print "checkerr $? " rowid
-	fflush()
+	print "sleep 2"
 
 	next
 }
