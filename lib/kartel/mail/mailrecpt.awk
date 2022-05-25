@@ -90,6 +90,7 @@ function mailrecpt(email, rowid, card, time, info, pubkey, password) {
 
 	print EOD
 	print "checkerr $? " rowid
+	fflush()
 
 	next
 }
