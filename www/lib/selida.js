@@ -81,12 +81,14 @@ Selida.windowSetup = function() {
 	// Κάθε πέντε (5) λεπτά περίπου φρεσκάρουμε το session
 	// cookie.
 
+/*
 	setInterval(function() {
 		$.ajax(Selida.server + 'lib/session.php').
 		fail(function(rsp) {
 			console.error(rsp);
 		});
 	}, 333333);
+*/
 
 	return Selida;
 };
