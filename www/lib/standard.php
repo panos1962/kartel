@@ -299,9 +299,17 @@ class Globals {
 		return;
 
 		// 24 * 7 * 3600 = 604800 (μια εβδομάδα)
+/*
 		ini_set("session.gc_maxlifetime", "604800");
 		session_set_cookie_params(604800);
 		session_start();
+*/
+
+		if (!session_start())
+		self::fatal("session_start: failed");
+
+		if (!setcookie(session_name(), session_id(), time() + (3600 * 12), "/"))
+		self::fatal("setcookie: failed");
 
 		if (!isset($_SESSION))
 		self::klise_fige("_SESSION: not set");
