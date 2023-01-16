@@ -6,7 +6,7 @@ PANDORA_BASEDIR="/var/opt/pandora"
 [ -z "${KARTEL_BASEDIR}" ] &&
 KARTEL_BASEDIR="/var/opt/kartel"
 
-pd_usagemsg="${pd_progname} [ -a from ] [ -A from ] [ -e to ] [ -E to ] [ -t ] [ -y ]
+pd_usagemsg="[ -a from ] [ -A from ] [ -e to ] [ -E to ] [ -t ] [ -y ]
 \t[ -C cards ] [ -k rdtype ] [ -n rows ] [ --separator=sep ] [ -r ] [ -R ] [ -S sqlcmd ]
 \t[ -T] [ -d delay ] [ -c count ] [ -q ] [ -s ] [ -b ] [ -B ] [ -l ]
 \t[ -M mailcf ] [ -m ] \
