@@ -65,7 +65,7 @@ function mailrecpt(email, rowid, card, time, info, pubkey, password) {
 	print "Content-Disposition", "inline"
 
 	print \
-	"<html>\n" \
+	"\n<html>\n" \
 	"<body>"
 
 	if (message)
