@@ -30,7 +30,7 @@ eval set -- "$(pd_parseopts \
 shift
 
 recipient=
-mailer="kartel@thessaloniki.gr"
+mailer="no-reply@thessaloniki.gr"
 subject=
 message=
 message_set=

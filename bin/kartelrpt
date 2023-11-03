@@ -267,7 +267,7 @@ pd_exit 0
 	fi
 } |
 pd_sendmail \
--f "kartel@thessaloniki.gr" \
+-f "no-reply@thessaloniki.gr" \
 -s "ΧΤΥΠΗΜΑΤΑ ΚΑΡΤΩΝ" \
 -a "${output}" \
 ${mail}
