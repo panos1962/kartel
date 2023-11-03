@@ -798,7 +798,8 @@ class Globals {
 		return ERROR_NULLMSG;
 
 		$cmd = self::$pandora_basedir . '/bin/pd_sendmail';
-		$cmd .= ' -F "' . self::$mailcf["mailer"] . '"';
+		$cmd .= ' -f "' . self::$mailcf["mailer"] .
+			'@' . self::$mailcf["domain"] . '"';
 		$cmd .= ' -t "' . $addr . '"';
 		$cmd .= ' -s "' . $subj . '"';
 		$cmd .= ' -m "' . $msg . '"';
