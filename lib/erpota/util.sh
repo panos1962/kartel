@@ -35,7 +35,22 @@ mode_check() {
 
 ###############################################################################@
 
+# Με το νέο ΟΠΣΟΥ που εφαρμόστηκε από τις 18 Ιανουαρίου 2024, η διαδικασία
+# παραλαβής δεδομένων από τον database server του ΟΠΣΟΥ άλλαξε και αντί να
+# τρέχουμε remote SQL script για να παραλάβουμε τον πίνακα των υπαλλήλων,
+# απλώς αντιγράφουμε το αρχείο "ipalilos.tsv" από το home directory του
+# χρήστη "np" (Neuropublic).
+
 get_data_ipalilos() {
+	[ -z "${keep_file_copy}" ] &&
+	[ -n "${ipalilos_file}" ] &&
+	proc_data_ipalilos "${ipalilos_file}" &&
+	return
+
+	proc_data_ipalilos "/home/np/ipalilos.tsv"
+}
+
+get_data_ipalilos_old() {
 	[ -z "${keep_file_copy}" ] &&
 	[ -n "${ipalilos_file}" ] &&
 	proc_data_ipalilos "${ipalilos_file}" &&
@@ -113,7 +128,22 @@ proc_data_ipalilos() {
 
 }
 
+# Με το νέο ΟΠΣΟΥ που εφαρμόστηκε από τις 18 Ιανουαρίου 2024, η διαδικασία
+# παραλαβής δεδομένων από τον database server του ΟΠΣΟΥ άλλαξε και αντί να
+# τρέχουμε remote SQL script για να παραλάβουμε τον πίνακα των μεταβολών,
+# απλώς αντιγράφουμε το αρχείο "metavoli.tsv" από το home directory του
+# χρήστη "np" (Neuropublic).
+
 get_data_metavoli() {
+	[ -z "${keep_file_copy}" ] &&
+	[ -n "${ipalilos_file}" ] &&
+	proc_data_metavoli "${ipalilos_file}" &&
+	return
+
+	proc_data_metavoli "/home/np/metavoli.tsv"
+}
+
+get_data_metavoli_old() {
 	[ -z "${keep_file_copy}" ] &&
 	[ -n "${metavoli_file}" ] &&
 	proc_data_metavoli "${metavoli_file}" &&
