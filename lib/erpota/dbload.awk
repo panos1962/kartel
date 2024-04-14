@@ -81,8 +81,7 @@ function truncate_table(table) {
 function load_tables() {
 	ttymsg("\nLoading data…")
 	load_table(ipalilos, "ipalilos", "`kodikos`, `eponimo`, `onoma`, `patronimo`, " \
-		"`genisi`, `afm`, `premail`, `ipemail`, " \
-		"`arxiki`, `proslipsi`, `diorismos`, `apoxorisi`, `katastasi`")
+		"`genisi`, `afm`, `premail`, `ipemail`, `katastasi`")
 
 	if (testmode)
 	return
