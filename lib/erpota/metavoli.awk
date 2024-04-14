@@ -86,6 +86,9 @@ function parse_metavoli(metavoli,			nf) {
 	metavoli["timi"] = $(++nf)
 	metavoli["dcdval"] = $(++nf)
 
+	if (metavoli["timi"] == "ΑΝΕΥ")
+	return 1
+
 	return 0
 }
 

@@ -13,7 +13,7 @@ BEGIN {
 	errcnt = 0
 	skipcnt = 0
 	proccnt = 0
-	ncols = 13
+	ncols = 9
 
 	# Το array 'not_null' δεικτοδοτείται με τα ονόματα των πεδίων
 	# του πίνακα 'ipalilos', και παίρνει τιμή 1 για τα πεδία που
@@ -32,7 +32,6 @@ BEGIN {
 	not_null["patronimo"] = 0
 	not_null["genisi"] = 0
 	not_null["afm"] = 0
-	not_null["arxiki"] = 0
 
 	read_bademail()
 }
@@ -57,10 +56,6 @@ skip_ipalilos(ipalilos) {
 	pd_nullconvert(ipalilos["afm"], "\\N"), \
 	pd_nullconvert(ipalilos["premail"], "\\N"), \
 	pd_nullconvert(ipalilos["ipemail"], "\\N"), \
-	pd_nullconvert(ipalilos["arxiki"], "\\N"), \
-	pd_nullconvert(ipalilos["proslipsi"], "\\N"), \
-	pd_nullconvert(ipalilos["diorismos"], "\\N"), \
-	pd_nullconvert(ipalilos["apoxorisi"], "\\N"), \
 	(ipalilos["katastasi"] ? "ΕΝΕΡΓΟΣ" : "ΑΝΕΝΕΡΓΟΣ")
 
 	proccnt++
@@ -118,24 +113,7 @@ function proc_ipalilos(ipalilos,		i, errs) {
 	ipalilos["afm"] = $(++i)
 	ipalilos["premail"] = $(++i)
 	ipalilos["ipemail"] = $(++i)
-	ipalilos["arxiki"] = $(++i)
-	ipalilos["proslipsi"] = $(++i)
-	ipalilos["diorismos"] = $(++i)
-	ipalilos["apoxorisi"] = $(++i)
 	ipalilos["katastasi"] = $(++i)
-
-	# Όσον αφορά τις ημερομηνίες πρόσληψης, διορισμού και αρχικής
-	# εργασιακής σχέσης με τον Δήμο Θεσσαλονίκης, ακολουθούμε την
-	# εξής τακτική: αν δεν έχει συμπληρωθεί ημερομηνία πρόσληψης,
-	# τότε τίθεται ίδια με την ημερομηνία διορισμού. Αν δεν έχει
-	# συμπληρωθεί ημερομηνία αρχικής εργασιακής σχέσης με τον ΔΘ,
-	# τότε τίθεται ίδια με την ημερομηνία πρόσληψης.
-
-	if (ipalilos["proslipsi"] == pd_null)
-	ipalilos["proslipsi"] = ipalilos["diorismos"]
-
-	if (ipalilos["arxiki"] == pd_null)
-	ipalilos["arxiki"] = ipalilos["proslipsi"]
 
 	for (i in not_null) {
 		if (ipalilos[i] != pd_null)
