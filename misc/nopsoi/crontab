@@ -1,0 +1,13 @@
+SHELL=/bin/bash
+PATH=/home/np/bin:/usr/local/bin:/usr/bin:/bin:/var/opt/pandora/bin
+
+# Στις εργάσιμες ημέρες, στις 02:11 το πρωί, γίνεται έλεγχος των αρχείων
+# "ipalilos.txt" και "metavoli.txt" τα οποία πρέπει να έχουν αποσταλεί από
+# τον database server του ΟΠΣΟΥ μέσω scp. Εφόσον αυτά τα αρχεία έχουν
+# παραληφθεί και είναι ορθά, παράγονται από αυτά τα αρχεία "ipalilos.tsv"
+# και "metavoli.tsv".
+#
+# Τα αρχεία "ipalilos.tsv" και "metavoli.tsv", φορτώνονται αργότερα από άλλο
+# cron job του χρήστη "kartel" στις databases "erpota1" ή "erpota2" εναλλάξ.
+
+11 2 * * mon-fri	erpotapp.sh
