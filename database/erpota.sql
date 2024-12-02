@@ -219,6 +219,7 @@ CREATE TABLE `prosvasi` (
 		'ADMIN'
 	) NOT NULL DEFAULT 'VIEW' COMMENT 'Επίπεδο πρόσβασης',
 	`info`		VARCHAR(1024) NOT NULL DEFAULT '' COMMENT 'Σχόλια',
+	`tilefono`	VARCHAR(30) NOT NULL DEFAULT '' COMMENT 'Τηλέφωνο επικοινωνίας',
 	`pubkey`	CHARACTER(40) NULL DEFAULT NULL COMMENT 'Public key',
 	`password`	CHARACTER(40) NULL DEFAULT NULL COMMENT 'Password',
 
