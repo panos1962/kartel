@@ -68,7 +68,11 @@ function truncate_tables() {
 	ttymsg("\nTruncating tables…")
 	truncate_table("metavoli")
 	truncate_table("ipalilos")
-	truncate_table("ipiresia")
+
+	# Η παρακάτω γραμμή σχολιάστηκε με την αλλαγή του οργανισμού
+	# του 2025 (βλ. README.txt).
+
+	# truncate_table("ipiresia")
 }
 
 function truncate_table(table) {
@@ -86,8 +90,11 @@ function load_tables() {
 	if (testmode)
 	return
 
-	if (ipiresia)
-	load_table(ipiresia, "ipiresia", "`kodikos`, `perigrafi`")
+	# Η παρακάτω γραμμές σχολιάστηκαν με την αλλαγή του οργανισμού
+	# του 2025 (βλ. README.txt).
+
+	# if (ipiresia)
+	# load_table(ipiresia, "ipiresia", "`kodikos`, `perigrafi`")
 
 	if (metavoli)
 	load_table(metavoli, "metavoli", "`ipalilos`, `idos`, " \
