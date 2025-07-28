@@ -376,6 +376,7 @@ SELECT
 `erpota1`.`ipalilos`.`eponimo`,
 `erpota1`.`ipalilos`.`onoma`,
 `erpota1`.`ipalilos`.`patronimo`,
+`erpota`.`prosvasi`.`info`,
 `erpota`.`prosvasi`.`tilefono`,
 `erpota`.`prosvasi`.`ipiresia`,
 `erpota`.`prosvasi`.`level`,
